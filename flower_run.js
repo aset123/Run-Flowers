@@ -2,6 +2,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const scoreBoard = document.getElementById("scoreBoard");
 
+
 let score = 0;
 let gameOver = false;
 
@@ -54,6 +55,14 @@ function update() {
     character.vy = 0;
     character.jumping = false;
   }
+
+  canvas.addEventListener("touchstart", function(e) {
+  if (!character.jumping) {
+    character.vy = -20;
+    character.jumping = true;
+  }
+});
+
 
   flowers.forEach((f, i) => {
     f.x -= gameSpeed;
