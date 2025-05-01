@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
 
   let bgOffset = 0;
 
-  const groundY = canvas.height - 100;
+  const groundY = canvas.height - 130;
   const gravity = 1;
   let score = 0;
   let gameOver = false;
