@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
   backgroundImg.src = "background.png";
 
   let bgOffset = 0;
-  const bgSpeed = 2;
+  // Убираем константу bgSpeed, вместо этого фон теперь ускоряется вместе с gameSpeed
 
   const groundY = canvas.height - 16;
   const gravity = 1;
@@ -48,7 +48,8 @@ window.addEventListener("load", () => {
   ]).then(() => {
 
     function drawBackground() {
-      bgOffset = (bgOffset + bgSpeed) % canvas.width;
+      // Фон движется пропорционально gameSpeed (например, в 2 раза медленнее)
+      bgOffset = (bgOffset + gameSpeed * 0.5) % canvas.width;
       ctx.drawImage(backgroundImg, -bgOffset, 0, canvas.width, canvas.height);
       ctx.drawImage(backgroundImg, canvas.width - bgOffset, 0, canvas.width, canvas.height);
     }
@@ -76,69 +77,69 @@ window.addEventListener("load", () => {
     }
 
     function update() {
-  if (gameOver) return;
+      if (gameOver) return;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBackground();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBackground();
 
-  character.y += character.vy;
-  character.vy += gravity;
+      character.y += character.vy;
+      character.vy += gravity;
 
-  if (character.y > groundY - character.height) {
-    character.y = groundY - character.height;
-    character.vy = 0;
-    character.jumping = false;
-  }
-
-  flowers.forEach(f => {
-    f.x -= gameSpeed;
-    ctx.drawImage(flowerImg, f.x, f.y, f.width, f.height);
-  });
-
-  obstacles.forEach(o => {
-    o.x -= gameSpeed;
-    ctx.drawImage(cactusImg, o.x, o.y, o.width, o.height);
-  });
-
-  flowers.forEach((f, i) => {
-    if (
-      character.x < f.x + f.width &&
-      character.x + character.width > f.x &&
-      character.y < f.y + f.height &&
-      character.y + character.height > f.y
-    ) {
-      flowers.splice(i, 1);
-      score += 0.1;
-      scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
-      if (score >= 10) {
-        gameOver = true;
-        scoreBoard.innerText = `Поздравляем! Твоя скидка: 10%`;
-        restartBtn.style.display = 'block';
+      if (character.y > groundY - character.height) {
+        character.y = groundY - character.height;
+        character.vy = 0;
+        character.jumping = false;
       }
+
+      flowers.forEach(f => {
+        f.x -= gameSpeed;
+        ctx.drawImage(flowerImg, f.x, f.y, f.width, f.height);
+      });
+
+      obstacles.forEach(o => {
+        o.x -= gameSpeed;
+        ctx.drawImage(cactusImg, o.x, o.y, o.width, o.height);
+      });
+
+      flowers.forEach((f, i) => {
+        if (
+          character.x < f.x + f.width &&
+          character.x + character.width > f.x &&
+          character.y < f.y + f.height &&
+          character.y + character.height > f.y
+        ) {
+          flowers.splice(i, 1);
+          score += 0.1;
+          scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
+          if (score >= 10) {
+            gameOver = true;
+            scoreBoard.innerText = `Поздравляем! Твоя скидка: 10%`;
+            restartBtn.style.display = 'block';
+          }
+        }
+      });
+
+      obstacles.forEach((o) => {
+        if (
+          character.x < o.x + o.width &&
+          character.x + character.width > o.x &&
+          character.y < o.y + o.height &&
+          character.y + character.height > o.y
+        ) {
+          gameOver = true;
+          scoreBoard.innerText = `Игра окончена! Твоя скидка: ${score.toFixed(1)}%`;
+          restartBtn.style.display = 'block';
+        }
+      });
+
+      drawCharacter();
+
+      // Ускорение игры: постепенно увеличиваем скорость, но ограничиваем ее до 10.
+      gameSpeed += 0.002;
+      if (gameSpeed > 10) gameSpeed = 10;
+
+      requestAnimationFrame(update);
     }
-  });
-
-  obstacles.forEach((o) => {
-    if (
-      character.x < o.x + o.width &&
-      character.x + character.width > o.x &&
-      character.y < o.y + o.height &&
-      character.y + character.height > o.y
-    ) {
-      gameOver = true;
-      scoreBoard.innerText = `Игра окончена! Твоя скидка: ${score.toFixed(1)}%`;
-      restartBtn.style.display = 'block';
-    }
-  });
-
-  drawCharacter();
-
-  // ← УСКОРЕНИЕ ИГРЫ
-  gameSpeed += 0.002;
-  if (gameSpeed > 10) gameSpeed = 10;
-
-  requestAnimationFrame(update);
-}
 
     document.addEventListener("touchstart", () => {
       if (!character.jumping && !gameOver) {
