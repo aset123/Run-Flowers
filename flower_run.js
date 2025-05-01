@@ -17,6 +17,25 @@ let flowers = [];
 let obstacles = [];
 let gameSpeed = 6;
 
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const baseWidth = 800, baseHeight = 600;
+let gameScale = 1;
+
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  gameScale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+
 function drawCharacter() {
   ctx.drawImage(characterImg, character.x, character.y, character.width, character.height);
 }
