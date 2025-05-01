@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Run 9:16</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- Пиксельный шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff6f7;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      display: block;
+      background: #ffffff;
+    }
+
+    #scoreBoard {
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+      font-family: 'Press Start 2P', monospace;
+      background: #faf7ed;
+      color: #333;
+      z-index: 10;
+      -webkit-font-smoothing: none;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeSpeed;
+    }
+
+    #restartBtn {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 14px;
+      font-family: 'Press Start 2P', monospace;
+      color: #383838; /* ← здесь цвет текста */
+      display: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="scoreBoard">Скидка: 0%</div>
+  <canvas id="gameCanvas" width="360" height="640"></canvas>
+  <button id="restartBtn">Сыграть снова</button>
+  <script src="game.js"></script>
+</body>
+</html>
