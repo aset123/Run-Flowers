@@ -31,7 +31,7 @@ window.addEventListener("load", () => {
     x: 20,
     y: groundY - 40,
     width: 60,
-    height: 80,
+    height: 90,
     vy: 0,
     jumping: false
   };
