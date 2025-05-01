@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
 
   const flowers = [];
   const obstacles = [];
-  const gameSpeed = 4;
+  let gameSpeed = 4;
 
   Promise.all([
     new Promise(res => characterImg.onload = res),
