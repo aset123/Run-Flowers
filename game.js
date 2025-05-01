@@ -108,13 +108,13 @@ window.addEventListener("load", () => {
           character.y + character.height > f.y
         ) {
           flowers.splice(i, 1);
-          score++;
-          scoreBoard.innerText = `Скидка: ${score}%`;
-          if (score >= 20) {
-            gameOver = true;
-            scoreBoard.innerText = `Поздравляем! Твоя скидка: 20%`;
-            restartBtn.style.display = 'block';
-          }
+          score += 0.1;
+          scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
+          if (score >= 10) {
+          gameOver = true;
+          scoreBoard.innerText = `Поздравляем! Твоя скидка: 10%`;
+          restartBtn.style.display = 'block';
+       }
         }
       });
 
