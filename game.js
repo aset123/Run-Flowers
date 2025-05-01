@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
 
   let bgOffset = 0;
 
-  const groundY = canvas.height - 16;
+  const groundY = canvas.height - 100;
   const gravity = 1;
   let score = 0;
   let gameOver = false;
@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
 
   const character = {
     x: 20,
-    y: groundY - 145,
+    y: groundY - 80,
     width: 60,
     height: 90,
     vy: 0,
@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
     function createFlower() {
       flowers.push({
         x: canvas.width,
-        y: groundY - 150,
+        y: groundY - 80,
         width: 70,
         height: 75
       });
@@ -68,7 +68,7 @@ window.addEventListener("load", () => {
     function createObstacle() {
       obstacles.push({
         x: canvas.width,
-        y: groundY - 145,
+        y: groundY - 75,
         width: 70,
         height: 75
       });
