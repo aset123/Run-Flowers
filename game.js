@@ -27,7 +27,7 @@ window.addEventListener("load", () => {
 
   const character = {
     x: 20,
-    y: groundY - 32,
+    y: groundY - 40,
     width: 60,
     height: 80,
     vy: 0,
