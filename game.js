@@ -60,9 +60,9 @@ window.addEventListener("load", () => {
     function createObstacle() {
       obstacles.push({
         x: canvas.width,
-        y: groundY - 40,
-        width: 60,
-        height: 65
+        y: groundY - 50,
+        width: 80,
+        height: 85
       });
     }
 
