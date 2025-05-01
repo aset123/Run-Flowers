@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Run 1920x1080</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff6f7;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      background: #ffffff;
+      margin: auto;
+    }
+    #scoreBoard {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      font-size: 20px;
+      background: #ffe0e8;
+      z-index: 10;
+    }
+    #restartBtn {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 18px;
+      display: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="scoreBoard">Скидка: 0%</div>
+  <canvas id="gameCanvas" width="1920" height="1080"></canvas>
+  <button id="restartBtn">Сыграть снова</button>
+  <script src="game_1920x1080.js"></script>
+</body>
+</html>
