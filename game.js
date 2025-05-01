@@ -113,7 +113,7 @@ window.addEventListener("load", () => {
 
   document.addEventListener("touchstart", () => {
     if (!character.jumping && !gameOver) {
-      character.vy = -canvas.height * 0.05;
+      character.vy = -canvas.height * 0.07;
       character.jumping = true;
     }
   });
