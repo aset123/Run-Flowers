@@ -52,8 +52,8 @@ window.addEventListener("load", () => {
       flowers.push({
         x: canvas.width,
         y: groundY - 24,
-        width: 35,
-        height: 40
+        width: 60,
+        height: 65
       });
     }
 
@@ -61,8 +61,8 @@ window.addEventListener("load", () => {
       obstacles.push({
         x: canvas.width,
         y: groundY - 24,
-        width: 35,
-        height: 40
+        width: 60,
+        height: 65
       });
     }
 
