@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
     function createFlower() {
       flowers.push({
         x: canvas.width,
-        y: groundY - 80,
+        y: groundY - 75,
         width: 70,
         height: 75
       });
