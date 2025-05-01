@@ -11,12 +11,12 @@ window.addEventListener("load", () => {
   backgroundImg.src = "background.png";
 
   let bgOffset = 0;
-  const bgSpeed = 2;
 
   const groundY = canvas.height - 16;
   const gravity = 1;
   let score = 0;
   let gameOver = false;
+  let gameSpeed = 4; // ← теперь let, чтобы менять
 
   const characterImg = new Image();
   characterImg.src = "character.png";
@@ -38,7 +38,6 @@ window.addEventListener("load", () => {
 
   const flowers = [];
   const obstacles = [];
-  const gameSpeed = 4;
 
   Promise.all([
     new Promise(res => characterImg.onload = res),
@@ -48,7 +47,7 @@ window.addEventListener("load", () => {
   ]).then(() => {
 
     function drawBackground() {
-      bgOffset = (bgOffset + bgSpeed) % canvas.width;
+      bgOffset = (bgOffset + gameSpeed * 0.5) % canvas.width;
       ctx.drawImage(backgroundImg, -bgOffset, 0, canvas.width, canvas.height);
       ctx.drawImage(backgroundImg, canvas.width - bgOffset, 0, canvas.width, canvas.height);
     }
@@ -111,10 +110,10 @@ window.addEventListener("load", () => {
           score += 0.1;
           scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
           if (score >= 10) {
-          gameOver = true;
-          scoreBoard.innerText = `Поздравляем! Твоя скидка: 10%`;
-          restartBtn.style.display = 'block';
-       }
+            gameOver = true;
+            scoreBoard.innerText = `Поздравляем! Твоя скидка: 10%`;
+            restartBtn.style.display = 'block';
+          }
         }
       });
 
@@ -126,12 +125,17 @@ window.addEventListener("load", () => {
           character.y + character.height > o.y
         ) {
           gameOver = true;
-          scoreBoard.innerText = `Игра окончена! Твоя скидка: ${score}%`;
+          scoreBoard.innerText = `Игра окончена! Твоя скидка: ${score.toFixed(1)}%`;
           restartBtn.style.display = 'block';
         }
       });
 
       drawCharacter();
+
+      // 🚀 Плавное ускорение игры
+      gameSpeed += 0.002;
+      if (gameSpeed > 10) gameSpeed = 10;
+
       requestAnimationFrame(update);
     }
 
