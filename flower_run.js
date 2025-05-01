@@ -1,119 +1,68 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-const scoreBoard = document.getElementById("scoreBoard");
+// flower_run.js
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const baseWidth = 800, baseHeight = 600;
+let gameScale = 1;
 
-
-let score = 0;
-let gameOver = false;
-
-const characterImg = new Image();
-characterImg.src = "character.png";
-
-const flowerImg = new Image();
-flowerImg.src = "flower.png";
-
-let character = { x: 50, y: 240, width: 40, height: 50, vy: 0, jumping: false };
-let gravity = 1.2;
-let flowers = [];
-let obstacles = [];
-let gameSpeed = 6;
-
-function drawCharacter() {
-  ctx.drawImage(characterImg, character.x, character.y, character.width, character.height);
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  gameScale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
 }
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-function createFlower() {
-  flowers.push({ x: 800, y: 250, width: 30, height: 40 });
-}
-
-function createObstacle() {
-  obstacles.push({ x: 800, y: 260, width: 20, height: 40 });
-}
-
-function drawFlowers() {
-  flowers.forEach(f => ctx.drawImage(flowerImg, f.x, f.y, f.width, f.height));
-}
-
-function drawObstacles() {
-  ctx.fillStyle = "#aaa";
-  obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.width, o.height));
-}
+// Character object example
+const character = {
+  x: 100,
+  y: 500,
+  width: 50,
+  height: 50,
+  vy: 0,
+  gravity: 1,
+  jumping: false
+};
 
 function update() {
-  if (gameOver) return;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawCharacter();
-  drawFlowers();
-  drawObstacles();
-
+  character.vy += character.gravity;
   character.y += character.vy;
-  character.vy += gravity;
 
-  if (character.y > 240) {
-    character.y = 240;
-    character.vy = 0;
+  if (character.y >= 500) {
+    character.y = 500;
     character.jumping = false;
   }
+}
 
-  canvas.addEventListener("touchstart", function(e) {
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.scale(gameScale, gameScale);
+  ctx.fillStyle = 'skyblue';
+  ctx.fillRect(0, 0, baseWidth, baseHeight);
+
+  // Draw character
+  ctx.fillStyle = 'red';
+  ctx.fillRect(character.x, character.y, character.width, character.height);
+  ctx.restore();
+}
+
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+
+canvas.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
   if (!character.jumping) {
     character.vy = -20;
     character.jumping = true;
   }
 });
-
-
-  flowers.forEach((f, i) => {
-    f.x -= gameSpeed;
-    if (
-      character.x < f.x + f.width &&
-      character.x + character.width > f.x &&
-      character.y < f.y + f.height &&
-      character.y + character.height > f.y
-    ) {
-      flowers.splice(i, 1);
-      score++;
-      scoreBoard.innerText = `Скидка: ${score}%`;
-      if (score >= 20) {
-        gameOver = true;
-        scoreBoard.innerText = `Поздравляем! Твоя скидка: 20%`;
-      }
-    }
-  });
-
-  obstacles.forEach((o) => {
-    o.x -= gameSpeed;
-    if (
-      character.x < o.x + o.width &&
-      character.x + character.width > o.x &&
-      character.y < o.y + o.height &&
-      character.y + character.height > o.y
-    ) {
-      gameOver = true;
-      scoreBoard.innerText = `Игра окончена! Твоя скидка: ${score}%`;
-    }
-  });
-
-  flowers = flowers.filter(f => f.x > -50);
-  obstacles = obstacles.filter(o => o.x > -20);
-
-  if (!gameOver) requestAnimationFrame(update);
-}
-
-document.addEventListener("keydown", e => {
-  if (e.code === "Space" && !character.jumping) {
-    character.vy = -18;
-    character.jumping = true;
-  }
-});
-
-setInterval(() => {
-  if (Math.random() < 0.5 && !gameOver) createFlower();
-}, 1500);
-
-setInterval(() => {
-  if (Math.random() < 0.7 && !gameOver) createObstacle();
-}, 2000);
-
-update();
