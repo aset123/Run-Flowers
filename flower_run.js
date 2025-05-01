@@ -106,5 +106,11 @@ setInterval(() => {
 setInterval(() => {
   if (Math.random() < 0.7 && !gameOver) createObstacle();
 }, 2000);
+canvas.addEventListener("touchstart", function(e) {
+  if (!character.jumping) {
+    character.vy = -20;
+    character.jumping = true;
+  }
+});
 
 update();
