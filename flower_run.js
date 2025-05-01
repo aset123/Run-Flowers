@@ -54,12 +54,7 @@ function update() {
     character.vy = 0;
     character.jumping = false;
   }
-canvas.addEventListener("touchstart", function(e) {
-  if (!character.jumping) {
-    character.vy = -20;
-    character.jumping = true;
-  }
-});
+
   flowers.forEach((f, i) => {
     f.x -= gameSpeed;
     if (
@@ -100,6 +95,12 @@ canvas.addEventListener("touchstart", function(e) {
 document.addEventListener("keydown", e => {
   if (e.code === "Space" && !character.jumping) {
     character.vy = -18;
+    character.jumping = true;
+  }
+});
+canvas.addEventListener("touchstart", function(e) {
+  if (!character.jumping) {
+    character.vy = -20;
     character.jumping = true;
   }
 });
