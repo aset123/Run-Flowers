@@ -137,7 +137,7 @@ window.addEventListener("load", () => {
 
     document.addEventListener("touchstart", () => {
       if (!character.jumping && !gameOver) {
-        character.vy = -30;
+        character.vy = -20;
         character.jumping = true;
       }
     });
