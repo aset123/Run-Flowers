@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
   
 
   const groundY = canvas.height - 16;
-  const gravity = 2;
+  const gravity = 1;
   let score = 0;
   let gameOver = false;
 
@@ -36,7 +36,7 @@ window.addEventListener("load", () => {
 
   const flowers = [];
   const obstacles = [];
-  const gameSpeed = 3;
+  const gameSpeed = 4;
 
   Promise.all([
     new Promise(res => characterImg.onload = res),
