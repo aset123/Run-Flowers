@@ -54,7 +54,12 @@ function update() {
     character.vy = 0;
     character.jumping = false;
   }
-
+canvas.addEventListener("touchstart", function(e) {
+  if (!character.jumping) {
+    character.vy = -20;
+    character.jumping = true;
+  }
+});
   flowers.forEach((f, i) => {
     f.x -= gameSpeed;
     if (
@@ -106,11 +111,6 @@ setInterval(() => {
 setInterval(() => {
   if (Math.random() < 0.7 && !gameOver) createObstacle();
 }, 2000);
-canvas.addEventListener("touchstart", function(e) {
-  if (!character.jumping) {
-    character.vy = -20;
-    character.jumping = true;
-  }
-});
+
 
 update();
