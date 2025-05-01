@@ -14,15 +14,17 @@
       padding: 0;
       background: #fff6f7;
       overflow: hidden;
+      height: 100vh;
+      width: 100vw;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     canvas {
-      width: 100vw;
+      width: auto;
       height: 100vh;
+      aspect-ratio: 9 / 16;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
       display: block;
@@ -53,7 +55,7 @@
       padding: 10px 20px;
       font-size: 14px;
       font-family: 'Press Start 2P', monospace;
-      color: #383838; /* ← здесь цвет текста */
+      color: #383838;
       display: none;
       z-index: 10;
     }
