@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
 
   const character = {
     x: 20,
-    y: groundY - 60,
+    y: groundY - 45,
     width: 60,
     height: 90,
     vy: 0,
