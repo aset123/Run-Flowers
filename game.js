@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
 
   const character = {
     x: 20,
-    y: groundY - 45,
+    y: groundY - 145,
     width: 60,
     height: 90,
     vy: 0,
@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
     function createFlower() {
       flowers.push({
         x: canvas.width,
-        y: groundY - 90,
+        y: groundY - 150,
         width: 70,
         height: 75
       });
@@ -68,7 +68,7 @@ window.addEventListener("load", () => {
     function createObstacle() {
       obstacles.push({
         x: canvas.width,
-        y: groundY - 75,
+        y: groundY - 145,
         width: 70,
         height: 75
       });
