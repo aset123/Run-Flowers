@@ -28,8 +28,8 @@ window.addEventListener("load", () => {
   const character = {
     x: 20,
     y: groundY - 32,
-    width: 40,
-    height: 60,
+    width: 60,
+    height: 80,
     vy: 0,
     jumping: false
   };
