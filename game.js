@@ -7,9 +7,11 @@ window.addEventListener("load", () => {
   canvas.width = 360;
   canvas.height = 640;
 
-  
-  
-  
+  const backgroundImg = new Image();
+  backgroundImg.src = "background.png";
+
+  let bgOffset = 0;
+  const bgSpeed = 2;
 
   const groundY = canvas.height - 16;
   const gravity = 1;
@@ -41,8 +43,15 @@ window.addEventListener("load", () => {
   Promise.all([
     new Promise(res => characterImg.onload = res),
     new Promise(res => flowerImg.onload = res),
-    new Promise(res => cactusImg.onload = res)
+    new Promise(res => cactusImg.onload = res),
+    new Promise(res => backgroundImg.onload = res)
   ]).then(() => {
+
+    function drawBackground() {
+      bgOffset = (bgOffset + bgSpeed) % canvas.width;
+      ctx.drawImage(backgroundImg, -bgOffset, 0, canvas.width, canvas.height);
+      ctx.drawImage(backgroundImg, canvas.width - bgOffset, 0, canvas.width, canvas.height);
+    }
 
     function drawCharacter() {
       ctx.drawImage(characterImg, character.x, character.y, character.width, character.height);
@@ -70,6 +79,7 @@ window.addEventListener("load", () => {
       if (gameOver) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBackground();
 
       character.y += character.vy;
       character.vy += gravity;
