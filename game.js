@@ -51,7 +51,7 @@ window.addEventListener("load", () => {
     function createFlower() {
       flowers.push({
         x: canvas.width,
-        y: groundY - 24,
+        y: groundY - 10,
         width: 60,
         height: 65
       });
@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
     function createObstacle() {
       obstacles.push({
         x: canvas.width,
-        y: groundY - 24,
+        y: groundY - 10,
         width: 60,
         height: 65
       });
