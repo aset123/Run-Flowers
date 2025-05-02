@@ -11,12 +11,11 @@ window.addEventListener("load", () => {
   backgroundImg.src = "background.png";
 
   let bgOffset = 0;
-
   const groundY = canvas.height - 125;
   const gravity = 1;
   let score = 0;
   let gameOver = false;
-  let gameSpeed = 4;
+  let gameSpeed = 2.5;
 
   const characterImg = new Image();
   characterImg.src = "character.png";
@@ -140,9 +139,9 @@ window.addEventListener("load", () => {
           character.y + character.height > f.y
         ) {
           flowers.splice(i, 1);
-          score += 0.1;
+          score += 0.2;
           scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
-          if (score >= 10) {
+          if (score >= 5) {
             gameOver = true;
             showFinalDiscount();
             restartBtn.style.display = 'block';
@@ -165,8 +164,8 @@ window.addEventListener("load", () => {
 
       drawCharacter();
 
-      gameSpeed += 0.002;
-      if (gameSpeed > 10) gameSpeed = 10;
+      gameSpeed += 0.001;
+      if (gameSpeed > 5) gameSpeed = 5;
 
       requestAnimationFrame(update);
     }
