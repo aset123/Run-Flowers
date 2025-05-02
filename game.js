@@ -26,6 +26,12 @@ window.addEventListener("load", () => {
   const cactusImg = new Image();
   cactusImg.src = "cactus.png";
 
+  // 🔊 Звуки
+  const jumpSound = new Audio("jump.mp3");
+  const flowerSound = new Audio("flower.mp3");
+  const hitSound = new Audio("hit.mp3");
+  const winSound = new Audio("win.mp3");
+
   const character = {
     x: 20,
     y: groundY - 80,
@@ -139,10 +145,12 @@ window.addEventListener("load", () => {
           character.y + character.height > f.y
         ) {
           flowers.splice(i, 1);
+          flowerSound.play();
           score += 0.2;
           scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
           if (score >= 5) {
             gameOver = true;
+            winSound.play();
             showFinalDiscount();
             restartBtn.style.display = 'block';
           }
@@ -157,6 +165,7 @@ window.addEventListener("load", () => {
           character.y + character.height > o.y
         ) {
           gameOver = true;
+          hitSound.play();
           showFinalDiscount();
           restartBtn.style.display = 'block';
         }
@@ -174,6 +183,7 @@ window.addEventListener("load", () => {
       if (!character.jumping && !gameOver) {
         character.vy = -25;
         character.jumping = true;
+        jumpSound.play();
       }
     });
 
