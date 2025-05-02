@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
   const gravity = 1;
   let score = 0;
   let gameOver = false;
-  let gameSpeed = 2.5;
+  let gameSpeed = 4;
 
   const characterImg = new Image();
   characterImg.src = "character.png";
@@ -164,8 +164,8 @@ window.addEventListener("load", () => {
 
       drawCharacter();
 
-      gameSpeed += 0.001;
-      if (gameSpeed > 5) gameSpeed = 5;
+      gameSpeed += 0.0005;
+      if (gameSpeed > 10) gameSpeed = 10;
 
       requestAnimationFrame(update);
     }
