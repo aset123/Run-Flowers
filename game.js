@@ -26,8 +26,8 @@ window.addEventListener("load", () => {
   const cactusImg = new Image();
   cactusImg.src = "cactus.png";
 
-  // 🔊 Web Audio API (инициализируется после касания)
-  let audioContext = null;
+  // 🔊 Web Audio API
+  let audioContext;
   const sounds = {};
 
   async function loadSound(name, url) {
@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
 
   function playSound(name) {
     const buffer = sounds[name];
-    if (buffer) {
+    if (buffer && audioContext.state === "running") {
       const source = audioContext.createBufferSource();
       source.buffer = buffer;
       source.connect(audioContext.destination);
@@ -49,18 +49,21 @@ window.addEventListener("load", () => {
   async function initAudioContext() {
     if (!audioContext) {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      await audioContext.resume();
+
       await Promise.all([
         loadSound("jump", "jump.mp3"),
         loadSound("flower", "flower.mp3"),
         loadSound("hit", "hit.mp3"),
         loadSound("win", "win.mp3")
       ]);
+
       startGame();
     }
   }
 
-  document.addEventListener("touchstart", initAudioContext, { once: true });
   document.addEventListener("click", initAudioContext, { once: true });
+  document.addEventListener("touchend", initAudioContext, { once: true });
 
   function startGame() {
     Promise.all([
