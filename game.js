@@ -32,13 +32,6 @@ window.addEventListener("load", () => {
   const hitSound = new Audio("hit.mp3");
   const winSound = new Audio("win.mp3");
 
-  function playSound(sound) {
-    try {
-      sound.currentTime = 0;
-      sound.play();
-    } catch (e) {}
-  }
-
   const character = {
     x: 20,
     y: groundY - 80,
@@ -152,12 +145,12 @@ window.addEventListener("load", () => {
           character.y + character.height > f.y
         ) {
           flowers.splice(i, 1);
-          playSound(flowerSound);
+          flowerSound.play();
           score += 0.2;
           scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
           if (score >= 5) {
             gameOver = true;
-            playSound(winSound);
+            winSound.play();
             showFinalDiscount();
             restartBtn.style.display = 'block';
           }
@@ -172,7 +165,7 @@ window.addEventListener("load", () => {
           character.y + character.height > o.y
         ) {
           gameOver = true;
-          playSound(hitSound);
+          hitSound.play();
           showFinalDiscount();
           restartBtn.style.display = 'block';
         }
@@ -186,35 +179,24 @@ window.addEventListener("load", () => {
       requestAnimationFrame(update);
     }
 
-    function startGame() {
-      update();
-
-      setInterval(() => {
-        if (!gameOver && Math.random() < 0.6) createFlower();
-      }, 1500);
-
-      setInterval(() => {
-        if (!gameOver && Math.random() < 0.5) createObstacle();
-      }, 2000);
-    }
-
-    function onUserInteraction() {
-      startGame();
-      document.removeEventListener("touchstart", onUserInteraction);
-      document.removeEventListener("click", onUserInteraction);
-    }
-
-    document.addEventListener("touchstart", onUserInteraction);
-    document.addEventListener("click", onUserInteraction);
-
     document.addEventListener("touchstart", () => {
       if (!character.jumping && !gameOver) {
         character.vy = -25;
         character.jumping = true;
-        playSound(jumpSound);
+        jumpSound.play();
       }
     });
 
     restartBtn.addEventListener("click", () => location.reload());
+
+    setInterval(() => {
+      if (!gameOver && Math.random() < 0.6) createFlower();
+    }, 1500);
+
+    setInterval(() => {
+      if (!gameOver && Math.random() < 0.5) createObstacle();
+    }, 2000);
+
+    update();
   });
 });
