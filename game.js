@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
   const gravity = 1;
   let score = 0;
   let gameOver = false;
-  let gameSpeed = 4; // ← теперь let, чтобы менять
+  let gameSpeed = 4;
 
   const characterImg = new Image();
   characterImg.src = "character.png";
@@ -38,6 +38,39 @@ window.addEventListener("load", () => {
 
   const flowers = [];
   const obstacles = [];
+
+  function generateDiscountCode(discount) {
+    const token = Math.floor(100000 + Math.random() * 900000);
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const timeStr = `${hours}:${minutes}`;
+    return {
+      code: `DISCOUNT-${discount}-${token}`,
+      time: timeStr
+    };
+  }
+
+  function showFinalDiscount() {
+    const discountText = score.toFixed(1);
+    const discountInfo = generateDiscountCode(discountText);
+
+    const waMessage = encodeURIComponent(
+      `Здравствуйте, я получил(а) скидку ${discountText}% в игре. Мой код: ${discountInfo.code}`
+    );
+
+    scoreBoard.innerHTML = `
+      🎉 Поздравляем!<br>
+      Твоя скидка: ${discountText}%<br>
+      Код подтверждения: <strong>${discountInfo.code}</strong><br>
+      Время получения: ${discountInfo.time}<br>
+      Вы можете воспользоваться ею в течение 15 минут.<br><br>
+      <a href="https://wa.me/77473530000?text=${waMessage}" target="_blank"
+         style="display:inline-block; padding:10px 14px; background:#25D366; color:white; font-weight:bold; font-family:inherit; text-decoration:none; border-radius:8px; margin-top:10px;">
+         💬 Оформить заказ в WhatsApp
+      </a>
+    `;
+  }
 
   Promise.all([
     new Promise(res => characterImg.onload = res),
@@ -111,7 +144,7 @@ window.addEventListener("load", () => {
           scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
           if (score >= 10) {
             gameOver = true;
-            scoreBoard.innerText = `Поздравляем! Твоя скидка: 10%`;
+            showFinalDiscount();
             restartBtn.style.display = 'block';
           }
         }
@@ -125,14 +158,13 @@ window.addEventListener("load", () => {
           character.y + character.height > o.y
         ) {
           gameOver = true;
-          scoreBoard.innerText = `Игра окончена! Твоя скидка: ${score.toFixed(1)}%`;
+          showFinalDiscount();
           restartBtn.style.display = 'block';
         }
       });
 
       drawCharacter();
 
-      // 🚀 Плавное ускорение игры
       gameSpeed += 0.002;
       if (gameSpeed > 10) gameSpeed = 10;
 
