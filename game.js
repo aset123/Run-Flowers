@@ -186,6 +186,27 @@ window.addEventListener("load", () => {
       requestAnimationFrame(update);
     }
 
+    function startGame() {
+      update();
+
+      setInterval(() => {
+        if (!gameOver && Math.random() < 0.6) createFlower();
+      }, 1500);
+
+      setInterval(() => {
+        if (!gameOver && Math.random() < 0.5) createObstacle();
+      }, 2000);
+    }
+
+    function onUserInteraction() {
+      startGame();
+      document.removeEventListener("touchstart", onUserInteraction);
+      document.removeEventListener("click", onUserInteraction);
+    }
+
+    document.addEventListener("touchstart", onUserInteraction);
+    document.addEventListener("click", onUserInteraction);
+
     document.addEventListener("touchstart", () => {
       if (!character.jumping && !gameOver) {
         character.vy = -25;
@@ -195,15 +216,5 @@ window.addEventListener("load", () => {
     });
 
     restartBtn.addEventListener("click", () => location.reload());
-
-    setInterval(() => {
-      if (!gameOver && Math.random() < 0.6) createFlower();
-    }, 1500);
-
-    setInterval(() => {
-      if (!gameOver && Math.random() < 0.5) createObstacle();
-    }, 2000);
-
-    update();
   });
 });
