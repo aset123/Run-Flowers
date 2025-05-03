@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
       </a><br><br>
 
       <a href="https://www.instagram.com/romantic.atyrau?igsh=MXM4Z3J2N3k4eDJzNw%3D%3D&utm_source=qr" target="_blank"
-         style="display:inline-block; padding:10px 14px; background:#8e44ad; color:white; font-weight:bold; font-family:inherit; text-decoration:none; border-radius:8px;">
+         style="display:inline-block; padding:10px 14px; background:#d61851; color:white; font-weight:bold; font-family:inherit; text-decoration:none; border-radius:8px;">
          📸 Посетить наш Instagram
       </a>
     `;
