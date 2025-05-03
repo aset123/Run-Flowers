@@ -70,9 +70,15 @@ window.addEventListener("load", () => {
       Код подтверждения: <strong>${discountInfo.code}</strong><br>
       Время получения: ${discountInfo.time}<br>
       Вы можете воспользоваться ею в течение 15 минут.<br><br>
+
       <a href="https://wa.me/77473530000?text=${waMessage}" target="_blank"
          style="display:inline-block; padding:10px 14px; background:#25D366; color:white; font-weight:bold; font-family:inherit; text-decoration:none; border-radius:8px; margin-top:10px;">
          💬 Оформить заказ в WhatsApp
+      </a><br><br>
+
+      <a href="https://www.instagram.com/romantic.atyrau?igsh=MXM4Z3J2N3k4eDJzNw%3D%3D&utm_source=qr" target="_blank"
+         style="display:inline-block; padding:10px 14px; background:#8e44ad; color:white; font-weight:bold; font-family:inherit; text-decoration:none; border-radius:8px;">
+         📸 Посетить наш Instagram
       </a>
     `;
   }
@@ -145,11 +151,13 @@ window.addEventListener("load", () => {
           character.y + character.height > f.y
         ) {
           flowers.splice(i, 1);
+          flowerSound.currentTime = 0;
           flowerSound.play();
           score += 0.2;
           scoreBoard.innerText = `Скидка: ${score.toFixed(1)}%`;
           if (score >= 5) {
             gameOver = true;
+            winSound.currentTime = 0;
             winSound.play();
             showFinalDiscount();
             restartBtn.style.display = 'block';
@@ -165,6 +173,7 @@ window.addEventListener("load", () => {
           character.y + character.height > o.y
         ) {
           gameOver = true;
+          hitSound.currentTime = 0;
           hitSound.play();
           showFinalDiscount();
           restartBtn.style.display = 'block';
@@ -183,6 +192,7 @@ window.addEventListener("load", () => {
       if (!character.jumping && !gameOver) {
         character.vy = -25;
         character.jumping = true;
+        jumpSound.currentTime = 0;
         jumpSound.play();
       }
     });
